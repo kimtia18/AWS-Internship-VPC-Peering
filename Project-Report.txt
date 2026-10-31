@@ -1,0 +1,15 @@
+
+1. Forward Path Success (App-A to App-B)
+
+"With VPC Peering connection ewb-a-b-peer successfully active and the route tables ewb-rt-a-private and ewb-rt-b-private correctly updated to route cross-VPC traffic through the peering connection, ICMP echo requests can successfully travel between the distinct subnets. The terminal output confirms 0% packet loss, verifying successful forward-path routing."
+
+
+2. Reverse Path Success (App-B to App-A)
+
+"Because asymmetric routing rules require symmetrical pathways in AWS, the reverse path route entries configured in ewb-rt-b-private point target 10.10.0.0/16 back through the peering connection pcx-06edb9c5743a52251. This allows the echo response packets to successfully navigate back from App-B to App-A without being dropped at the VPC boundary."
+
+
+
+3. Controlled Security Group Failure Explanation
+
+"When the Custom ICMP inbound rule is removed from the security group of the destination host (ewb-sg-app-b), the AWS stateful firewall explicitly drops all incoming echo requests at the network interface layer. As a result, the source machine experiences a 100% packet loss timeout, proving that the infrastructure's security isolation boundaries are fully functional." 
